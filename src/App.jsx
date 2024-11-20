@@ -48,7 +48,7 @@ function App() {
           </Routes>
         </Router>
 
-        <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
+        <ToastContainer position="bottom-right" autoClose={3000} hideProgressBar />
       </LoadingProvider>
     </UserProvider>
   );
