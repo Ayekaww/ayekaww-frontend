@@ -39,9 +39,9 @@ const Home = () => {
       try {
         
         const response = await axios.get(`${BASE_URL}/api/movies/home/`, {
-          headers: {
+          headers: token ? {
             Authorization: `Bearer ${token}`,
-          },
+          } : {},
         });
         setMovieData(response.data);
       } catch (error) {
