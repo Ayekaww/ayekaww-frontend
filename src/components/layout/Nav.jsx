@@ -94,7 +94,7 @@ const Nav = () => {
           <div className="flex justify-between items-center">
             <Link to="/" className="flex items-center space-x-2">
               <img src={logo} alt="Logo" className="h-12 w-12" />
-              <span className="text-2xl font-bold">AyeKawww</span>
+              <span className="text-2xl font-bold">AyeKaww</span>
             </Link>
           </div>
 
