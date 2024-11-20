@@ -23,6 +23,8 @@ const MovieCard = ({ movie }) => {
 
     if (!token) {
       toast.error("You must be logged in to manage your watchlist.");
+      setIsLoading(false);
+
       return;
     }
 
