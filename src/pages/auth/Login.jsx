@@ -1,31 +1,30 @@
 // src/pages/auth/Login.jsx
-import React, { useContext, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { login } from '../../services/authService';
-import { UserContext } from '../../contexts/UserContext';
-import { LoadingContext } from '../../contexts/LoadingContext';
+import React, { useContext, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { login } from "../../services/authService";
+import { UserContext } from "../../contexts/UserContext";
+import { LoadingContext } from "../../contexts/LoadingContext";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const { loginToken } = useContext(UserContext)
-  const {setIsLoading} = useContext(LoadingContext)
+  const { loginToken } = useContext(UserContext);
+  const { setIsLoading } = useContext(LoadingContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       const data = await login(email, password);
-      loginToken(data.access)
-      navigate('/'); // Redirect to home after login
+      loginToken(data.access);
+      navigate("/"); // Redirect to home after login
     } catch (error) {
-      console.log(error)
-      setError('Invalid email or password');
+      console.log(error);
+      setError("Invalid email or password");
     }
-    setIsLoading(false)
-
+    setIsLoading(false);
   };
 
   return (
@@ -54,21 +53,25 @@ const Login = () => {
             />
           </div>
           {error && <p className="text-red-500">{error}</p>}
-          <button type="submit" className="w-full p-3 mt-6 bg-green-500 rounded-lg">
+          <button
+            type="submit"
+            className="w-full p-3 mt-6 bg-green-500 rounded-lg"
+          >
             Login
           </button>
         </form>
         <p className="text-center mt-4 text-gray-400">
-          Don’t have an account?{' '}
+          Don’t have an account?{" "}
           <Link to="/signup" className="text-green-500 hover:underline">
             Sign Up
           </Link>
         </p>
 
-        <Link to="/signup" className="text-green-500 mt-4 hover:underline">
-           Forgot Password?
+        <p className="text-center mt-4">
+          <Link to="/signup" className="text-green-500 hover:underline">
+            Forgot Password?
           </Link>
-
+        </p>
       </div>
     </div>
   );
