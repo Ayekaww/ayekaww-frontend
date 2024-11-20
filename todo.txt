@@ -1,0 +1,5 @@
+Movie API
+Movie Play API
+Home API
+Search API (+ Categories) , Pagination
+Profile API
