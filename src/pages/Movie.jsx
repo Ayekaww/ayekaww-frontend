@@ -93,13 +93,14 @@ const Movie = () => {
     <div className="bg-black min-h-screen p-8 text-white">
       {/* Video Player Section */}
       <div className="w-full mb-8">
-        <ReactPlayer
+        {/* <ReactPlayer
           url="https://www.youtube.com/watch?v=YoHD9XEInc0" // Hardcoded YouTube trailer URL
           controls
           width="100%"
           height="400px"
           className="rounded-lg overflow-hidden shadow-lg"
-        />
+        /> */}
+        <div dangerouslySetInnerHTML={{ __html: movie.embedded }} />
       </div>
 
       {/* Movie Details Section */}
