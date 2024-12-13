@@ -7,10 +7,13 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
 import { FaHistory } from "react-icons/fa";
+import kbzLogo from "../assets/kbz.png";
+import waveLogo from "../assets/wave.png";
+
 
 const paymentMethods = [
-  { id: "kbzpay", name: "KBZ Pay", account: "0987654321\nKYAW KO KO TUN" },
-  { id: "wavepay", name: "Wave Pay", account: "0912345678\nKYAW KO KO TUN" },
+  { id: "kbzpay", name: "KBZ Pay", account: "09402579196\nUrmila" },
+  { id: "wavepay", name: "Wave Pay", account: "09402579196\nOu milar" },
 ];
 
 const Checkout = () => {
@@ -84,8 +87,11 @@ const Checkout = () => {
   return (
     <div className="bg-gradient-to-b from-gray-900 via-gray-800 to-black min-h-screen p-8 text-white">
       <h1 className="text-3xl font-bold mb-8 text-center">Checkout</h1>
-      <Link to="/order-history" className="text-green-500 text-center hover:underline">
-        See Order History <FaHistory className="inline"/>
+      <Link
+        to="/order-history"
+        className="text-green-500 text-center hover:underline"
+      >
+        See Order History <FaHistory className="inline" />
       </Link>
       {/* Order Summary */}
       <section className="bg-gray-800 p-6 mt-4 rounded-lg shadow-lg mb-8 border border-accent">
@@ -105,7 +111,7 @@ const Checkout = () => {
         <h2 className="text-2xl font-semibold mb-4">Choose Payment Method</h2>
         <form className="space-y-4">
           {paymentMethods.map((method) => (
-            <div key={method.id} className="flex items-center">
+            <div key={method.id} className="flex items-center space-x-3">
               <input
                 type="radio"
                 id={method.id}
@@ -115,15 +121,20 @@ const Checkout = () => {
                 onChange={handlePaymentMethodChange}
                 className="form-radio h-4 w-4 text-green-500 transition"
               />
-              <label htmlFor={method.id} className="ml-3 text-gray-300">
+       <img
+          src={method.id === "kbzpay" ? kbzLogo : waveLogo}
+          alt={`${method.name} logo`}
+          className="h-10 w-10 object-contain rounded"
+        />
+              <label htmlFor={method.id} className="text-gray-300">
                 {method.name}
               </label>
             </div>
           ))}
         </form>
         <div className="mt-4 bg-gray-950 p-4 rounded-lg text-gray-400 whitespace-pre-wrap">
-          <strong>Payment Account Details:</strong>
-          <br />
+          {/* <strong>Payment Account Details:</strong>
+          <br /> */}
           {
             paymentMethods.find((method) => method.id === selectedMethod)
               .account
