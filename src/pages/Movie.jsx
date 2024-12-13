@@ -1,105 +1,56 @@
-import React, { useContext, useEffect, useState } from "react";
-import ReactPlayer from "react-player";
-import MovieCard from "../components/specific/MovieCard";
-import { toast } from "react-toastify";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { BASE_URL } from "../constants";
-import { LoadingContext } from "../contexts/LoadingContext";
-import { UserContext } from "../contexts/UserContext";
+import MovieCard from "../components/specific/MovieCard";
 
 const Movie = () => {
-  const { id } = useParams(); // Get the movie ID from the URL
+  const { id } = useParams();
   const navigate = useNavigate();
   const token = Cookies.get("token");
 
-  const {setIsLoading} = useContext(LoadingContext)
-  const {fetchUser} = useContext(UserContext)
-
   const [movie, setMovie] = useState(null);
   const [recommendedMovies, setRecommendedMovies] = useState([]);
-  const [isWatchlisted, setIsWatchlisted] = useState(false); // Track watchlist status
+  const [isFadeComplete, setIsFadeComplete] = useState(false); // Track animation
 
   useEffect(() => {
     if (!token) {
       navigate("/login");
     }
-  }, [token, navigate]);
 
-  useEffect(() => {
     const fetchMovieDetails = async () => {
-      setIsLoading(true)
       try {
         const response = await axios.get(`${BASE_URL}/api/movies/${id}/`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
         setMovie(response.data);
         setRecommendedMovies(response.data.recommended_movies || []);
-        setIsWatchlisted(response.data.is_watchlisted); // Set watchlist state
       } catch (error) {
-        toast.error("Failed to fetch movie details.");
-        console.error("Error fetching movie details:", error);
-        navigate("/"); // Redirect to home on failure
+        console.error("Failed to fetch movie details:", error);
+        navigate("/");
       }
-      fetchUser()
-      setIsLoading(false)
     };
 
+    // Fetch movie details and wait for animation
     fetchMovieDetails();
+    setTimeout(() => setIsFadeComplete(true), 500); // Half of the animation duration
   }, [id, token, navigate]);
 
-  const handleWatchlistToggle = async () => {
-    setIsLoading(true)
-
-    try {
-      if (isWatchlisted) {
-        // Remove from watchlist
-        await axios.delete(`${BASE_URL}/api/movies/watchlist/remove/${movie.id}/`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        toast.success(`${movie.title} has been removed from your watchlist.`);
-      } else {
-        // Add to watchlist
-        await axios.post(
-          `${BASE_URL}/api/movies/watchlist/`,
-          { movie_id: movie.id },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        toast.success(`${movie.title} has been added to your watchlist.`);
-      }
-      setIsWatchlisted(!isWatchlisted); // Toggle watchlist state
-    } catch (error) {
-      toast.error("Failed to update watchlist.");
-      console.error("Error updating watchlist:", error);
-    }
-    setIsLoading(false)
-
-  };
+  if (!isFadeComplete) {
+    return (
+      <div className="fixed inset-0 bg-black opacity-100 animate-fade-out z-50"></div>
+    );
+  }
 
   if (!movie) {
-    return <></>;
+    return <div className="text-white">Loading...</div>;
   }
 
   return (
     <div className="bg-black min-h-screen p-8 text-white">
       {/* Video Player Section */}
       <div className="w-full mb-8">
-        {/* <ReactPlayer
-          url="https://www.youtube.com/watch?v=YoHD9XEInc0" // Hardcoded YouTube trailer URL
-          controls
-          width="100%"
-          height="400px"
-          className="rounded-lg overflow-hidden shadow-lg"
-        /> */}
         <div dangerouslySetInnerHTML={{ __html: movie.embedded }} />
       </div>
 
@@ -111,18 +62,6 @@ const Movie = () => {
             {movie.year} • {movie.genre} • Directed by {movie.director || "Unknown"}
           </p>
           <p className="text-gray-300">{movie.description}</p>
-          <div className="flex space-x-4 mt-4">
-            <button
-              onClick={handleWatchlistToggle}
-              className={`px-4 py-2 font-semibold rounded-lg transition ${
-                isWatchlisted
-                  ? "bg-red-600 text-white hover:bg-red-700"
-                  : "bg-gray-700 text-white hover:bg-gray-600"
-              }`}
-            >
-              {isWatchlisted ? "- Remove from Watchlist" : "+ Add to Watchlist"}
-            </button>
-          </div>
         </div>
       </div>
 
