@@ -1,19 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { FaCoins } from "react-icons/fa";
-import { FiPlay, FiPlus, FiMinus } from "react-icons/fi";
+import { FiPlay } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
+import { UserContext } from "../../contexts/UserContext";
 
 const MovieCard = ({ movie }) => {
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
   const navigate = useNavigate();
   const token = Cookies.get("token");
 
+  const { user } = useContext(UserContext); // Access user context to get coins
+
   const handlePlay = () => {
     if (!token) {
       toast.error("You must be logged in to play a movie.");
       return;
+    }
+
+    if (movie.coins > 0 && user.coins < movie.coins) {
+      toast.error("Insufficient coins to play this movie.");
+      return;
+    }
+
+    // Prompt user for confirmation if coins are required
+    if (movie.coins > 0) {
+      const confirmPlay = window.confirm(
+        `This movie will cost ${movie.coins} coins. Do you want to proceed?`
+      );
+      if (!confirmPlay) return;
     }
 
     // Start fade-out animation

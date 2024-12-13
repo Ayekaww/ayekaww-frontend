@@ -34,7 +34,7 @@ const Movie = () => {
 
     // Fetch movie details and wait for animation
     fetchMovieDetails();
-    setTimeout(() => setIsFadeComplete(true), 500); // Half of the animation duration
+    setTimeout(() => setIsFadeComplete(true), 1000); // Half of the animation duration
   }, [id, token, navigate]);
 
   if (!isFadeComplete) {
@@ -50,8 +50,8 @@ const Movie = () => {
   return (
     <div className="bg-black min-h-screen p-8 text-white">
       {/* Video Player Section */}
-      <div className="w-full mb-8">
-        <div dangerouslySetInnerHTML={{ __html: movie.embedded }} />
+      <div className="mb-8">
+        <div className="w-full" dangerouslySetInnerHTML={{ __html: movie.embedded }} />
       </div>
 
       {/* Movie Details Section */}
