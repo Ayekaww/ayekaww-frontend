@@ -1,3 +1,4 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}", // Adjust paths based on your project structure
@@ -5,16 +6,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: '#111111',
-        text: '#ffffff',
-        accent: '#37F3A2',
-        danger: '#F73A2A',
+        background: "#111111",
+        text: "#ffffff",
+        accent: "#37F3A2",
+        danger: "#F73A2A",
       },
       animation: {
         "fade-in-out": "fade-in-out 1s ease-in-out",
         "fade-in": "fade-in 1s ease-in-out",
         "fade-out": "fade-out 1s ease-in-out",
-
       },
       keyframes: {
         "fade-in-out": {
