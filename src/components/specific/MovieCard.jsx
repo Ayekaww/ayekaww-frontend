@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
 import { UserContext } from "../../contexts/UserContext";
+import { BASE_URL } from "../../constants";
 
 const MovieCard = ({ movie }) => {
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
@@ -36,7 +37,7 @@ const MovieCard = ({ movie }) => {
 
       // Make a purchase request
       try {
-        const response = await fetch(`/api/movies/purchase/`, {
+        const response = await fetch(`${BASE_URL}/api/movies/purchase/`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
