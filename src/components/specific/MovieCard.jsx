@@ -13,23 +13,50 @@ const MovieCard = ({ movie }) => {
 
   const { user } = useContext(UserContext); // Access user context to get coins
 
-  const handlePlay = () => {
+  const handlePlay = async () => {
     if (!token) {
       toast.error("You must be logged in to play a movie.");
       return;
     }
 
-    if (movie.coins > 0 && user.coins < movie.coins) {
-      toast.error("Insufficient coins to play this movie.");
-      return;
-    }
+    if (!movie.is_purchased) {
+      // Check if the movie requires coins and if the user has enough
+      if (movie.coins > 0 && user.coins < movie.coins) {
+        toast.error("Insufficient coins to play this movie.");
+        return;
+      }
 
-    // Prompt user for confirmation if coins are required
-    if (movie.coins > 0) {
-      const confirmPlay = window.confirm(
-        `This movie will cost ${movie.coins} coins. Do you want to proceed?`
-      );
-      if (!confirmPlay) return;
+      // Prompt user for confirmation if coins are required
+      if (movie.coins > 0) {
+        const confirmPurchase = window.confirm(
+          `This movie will cost ${movie.coins} coins. Do you want to purchase it?`
+        );
+        if (!confirmPurchase) return;
+      }
+
+      // Make a purchase request
+      try {
+        const response = await fetch(`/api/movies/purchase/`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ movie_id: movie.id }),
+        });
+
+        if (!response.ok) {
+          const data = await response.json();
+          toast.error(data.error || "Failed to purchase the movie.");
+          return;
+        }
+
+        toast.success("Movie purchased successfully!");
+        movie.is_purchased = true; // Update movie state to reflect purchase
+      } catch (error) {
+        toast.error("An error occurred while purchasing the movie.");
+        return;
+      }
     }
 
     // Start fade-out animation
