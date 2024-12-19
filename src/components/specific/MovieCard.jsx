@@ -88,10 +88,12 @@ const MovieCard = ({ movie }) => {
               onClick={handlePlay}
               className="bg-red-600 text-white py-1 px-3 rounded-full flex items-center hover:bg-red-700 transition"
             >
-              <FiPlay className="mr-2" /> Play{" "}
-              <span className="text-amber-200 text-[10px] md:text-base font-bold ms-4">
-                {movie.coins > 0 ? movie.coins : "Free"} <FaCoins className="inline" />
-              </span>
+              <FiPlay className="mr-2" /> Play
+              {!movie.is_purchased && (
+                <span className="text-amber-200 text-[10px] md:text-base font-bold ms-4">
+                  {movie.coins > 0 ? movie.coins : "Free"} <FaCoins className="inline" />
+                </span>
+              )}
             </button>
           </div>
         </div>
