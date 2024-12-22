@@ -142,6 +142,18 @@ const Checkout = () => {
         </div>
       </section>
 
+<div className="bg-background p-4 rounded-xl mb-4 shadow-md">
+      <p className="text-white mb-1">ငွေပေးချေပြီးကြောင်းကို adminဆီသို telegramဖြင့်အကြောင်းကြားပေးပါ
+      <a
+                href="https://t.me/nltsupporting"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 block underline hover:text-blue-800"
+              >
+                @nltsupporting
+              </a>
+      </p>
+</div>
       {/* Screenshot Upload */}
       <section className="bg-gray-800 p-6 rounded-lg shadow-lg mb-8">
         <h2 className="text-2xl font-semibold mb-4">

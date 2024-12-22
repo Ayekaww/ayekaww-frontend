@@ -83,6 +83,21 @@ const Home = () => {
 
   return (
     <div className="bg-black text-white min-h-screen p-4 space-y-8">
+
+<section className="bg-gray-800 text-center py-4 rounded-lg border border-gray-600">
+        <p className="text-lg font-medium">
+          Place your ads here!{" "} Contact telegram 
+          <a
+            href="https://t.me/nltsupporting"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-400 ms-2 underline hover:text-blue-600"
+          >
+          @nltsupporting
+          </a>{" "}
+          for details.
+        </p>
+      </section>
       {/* Hot Movies Section */}
       {movieData["Hot Movies"] && (
         <section className="space-y-4">
@@ -98,7 +113,7 @@ const Home = () => {
       )}
 
       {/* Ads Banner */}
-      <section className="bg-gray-800 h-[100px] text-center py-4 rounded-lg border border-gray-600">
+      <section className="bg-gray-800 text-center py-4 rounded-lg border border-gray-600">
         <p className="text-lg font-medium">
           Place your ads here!{" "} Contact telegram 
           <a
@@ -115,6 +130,21 @@ const Home = () => {
 
       {/* Other Categories */}
       {renderOtherCategories()}
+
+      <section className="bg-gray-800 text-center py-4 rounded-lg border border-gray-600">
+        <p className="text-lg font-medium">
+          Place your ads here!{" "} Contact telegram 
+          <a
+            href="https://t.me/nltsupporting"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-400 ms-2 underline hover:text-blue-600"
+          >
+          @nltsupporting
+          </a>{" "}
+          for details.
+        </p>
+      </section>
     </div>
   );
 };
