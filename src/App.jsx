@@ -17,6 +17,7 @@ import LoadingSpinner from "./components/common/LoadingSpinner";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import OrderHistory from "./pages/OrderHistory";
+import FloatingSupportIcon from "./components/FloatingSupportIcon";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
         </Router>
 
         <ToastContainer position="bottom-right" autoClose={3000} hideProgressBar />
+        <FloatingSupportIcon />
       </LoadingProvider>
     </UserProvider>
   );
