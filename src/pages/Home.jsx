@@ -69,6 +69,7 @@ const Home = () => {
   const renderOtherCategories = () => {
     return Object.keys(movieData)
       .filter((category) => category !== "Hot Movies")
+      .sort((a, b) => (a.toLowerCase().includes("free") ? -1 : b.toLowerCase().includes("free") ? 1 : 0)) // Prioritize categories with "Free"
       .map((category, index) => (
         <section key={index} className="space-y-4">
           <h2 className="text-2xl font-semibold">{category}</h2>
@@ -80,6 +81,7 @@ const Home = () => {
         </section>
       ));
   };
+  
 
   return (
     <div className="bg-black text-white min-h-screen p-4 space-y-8">
